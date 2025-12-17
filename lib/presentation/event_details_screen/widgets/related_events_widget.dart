@@ -57,18 +57,7 @@ class RelatedEventsWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/student-dashboard');
-                },
-                child: Text(
-                  'View All',
-                  style: AppTheme.lightTheme.textTheme.bodyMedium?.copyWith(
-                    color: AppTheme.lightTheme.colorScheme.primary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
+              
             ],
           ),
           SizedBox(height: 2.h),

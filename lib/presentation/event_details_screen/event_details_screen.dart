@@ -32,28 +32,25 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
   Future<void> _fetchEvents() async {
     try {
       final supabase = Supabase.instance.client;
+      
+      // Get current time in ISO format for comparison
+      final String currentDateTime = DateTime.now().toIso8601String();
+
       final response = await supabase
           .from('events')
           .select('*, attendance_logs(count)')
-          .order('event_date', ascending: true);
+          .gte('event_date', currentDateTime) // <--- FILTER: Only future dates
+          .order('event_date', ascending: true); // Sort: Nearest first
 
       if (mounted) {
         setState(() {
           _events = List<Map<String, dynamic>>.from(response);
           _isLoading = false;
 
+          // LOGIC UPDATE: Default to the first event (Nearest Upcoming)
+          // since we are no longer fetching past/completed events.
           if (_events.isNotEmpty && _selectedEvent == null) {
-            final endedEvent = _events.lastWhere(
-              (event) {
-                final status = (event['status'] ?? '').toString().toLowerCase();
-                return status == 'completed' ||
-                    status == 'closed' ||
-                    status == 'ended';
-              },
-              orElse: () => _events.last,
-            );
-
-            _selectedEvent = endedEvent;
+            _selectedEvent = _events.first;
           }
         });
       }

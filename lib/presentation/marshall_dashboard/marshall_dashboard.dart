@@ -512,7 +512,6 @@ class _MarshallDashboardState extends State<MarshallDashboard>
         extendBodyBehindAppBar: true,
         backgroundColor: AppTheme.lightTheme.scaffoldBackgroundColor,
         appBar: PreferredSize(
-          // Increased height to allow for top padding above title
           preferredSize: const Size.fromHeight(kToolbarHeight + 82),
           child: ClipRRect(
             child: BackdropFilter(
@@ -520,11 +519,9 @@ class _MarshallDashboardState extends State<MarshallDashboard>
               child: AppBar(
                 elevation: 0,
                 centerTitle: true,
-                // Increase toolbar height to shift title down
                 toolbarHeight: kToolbarHeight + 30,
                 backgroundColor: Colors.white.withOpacity(0.01),
                 title: Padding(
-                  // ADDED: Specific top padding for the title text
                   padding: EdgeInsets.only(top: 4.h),
                   child: const Text('Marshall Dashboard',
                       style: TextStyle(
